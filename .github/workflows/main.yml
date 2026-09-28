@@ -3,30 +3,32 @@ name: Tawal
 on:
   push:
     branches:
-      - src/code/**
       - main
-workflow_dispatch:
- inputs:
-  description: Testing
-  requirement:true
-  type:string
-  
- env:
-   descrpition: choose env
-   required: true
-    type:choose
-    options
-      - prod
-      - dev
-      - QA
-  
-    jobs:
-      build:
-        runs-on: ubuntu-latest
+    paths:
+      - 'src/code/**'
 
-        steps:
-          - name: Config  
-            run: |
-              echo "Env ${{inputs.env}}"
-              echo "Description: ${{ inputs.description }}"
-        
+  workflow_dispatch:
+    inputs:
+      description:
+        description: 'Testing'
+        required: true
+        type: string
+
+      env:
+        description: 'Choose environment'
+        required: true
+        type: choice
+        options:
+          - prod
+          - dev
+          - QA
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show selected environment
+        run: |
+          echo "Environment: ${{ inputs.env }}"
+          echo "Description: ${{ inputs.description }}"
