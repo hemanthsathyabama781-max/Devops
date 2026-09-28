@@ -1,0 +1,32 @@
+name: Tawal
+
+on:
+  push:
+    branches:
+      - src/code/**
+      - main
+workflow_dispatch:
+ inputs:
+  description: Testing
+  requirement:true
+  type:string
+  
+ env:
+   descrpition: choose env
+   required: true
+    type:choose
+    options
+      - prod
+      - dev
+      - QA
+  
+    jobs:
+      build:
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: Config  
+            run: |
+              echo "Env ${{inputs.env}}"
+              echo "Description: ${{ inputs.description }}"
+        
